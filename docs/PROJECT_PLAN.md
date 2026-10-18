@@ -14,7 +14,7 @@ Given a video file or live webcam stream, detect visible human faces and vehicle
 
 ### Stage A — baseline
 
-The first runnable baseline uses OpenCV's pretrained Haar cascade classifiers for frontal faces and Russian-style license plates. A Haar cascade is a traditional feature-based classifier; it is much lighter than a modern neural detector but can miss side profiles, small objects, and plates from other regions. Run it on a short clip, expand its boxes by a configurable margin, and apply Gaussian blur. Record baseline metrics and visually inspect misses. The next baseline will replace the cascades with a modern pretrained detector before fine-tuning.
+The first runnable baseline uses OpenCV's pretrained Haar cascade classifiers for frontal faces and Russian-style license plates. A Haar cascade is a traditional feature-based classifier; it is much lighter than a modern neural detector but can miss side profiles, small objects, and plates from other regions. Run it on a short clip, expand its boxes by a configurable margin, and apply Gaussian blur. A diagnostic frame with boxes helps separate detector misses from insufficient coverage or blur. The next baseline will replace the cascades with a modern pretrained detector before fine-tuning.
 
 ### Stage B — plate fine-tuning
 
