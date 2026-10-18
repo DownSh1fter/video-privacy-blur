@@ -64,6 +64,44 @@ class HaarCascadeDetector:
         return found
 
 
+def inspect_video_frame(input_path: Path, timestamp_seconds: float) -> tuple[np.ndarray, dict[str, int]]:
+    """Return one source frame annotated with the baseline's detected boxes.
+
+    This diagnostic view lets a learner distinguish a detector miss from a blur
+    that is too weak or covers too small an area. The annotated frame is only
+    returned to the local Streamlit app; it is not written to disk.
+    """
+    capture = cv2.VideoCapture(str(input_path))
+    if not capture.isOpened():
+        raise ValueError("Could not open this video file")
+
+    try:
+        capture.set(cv2.CAP_PROP_POS_MSEC, max(0.0, timestamp_seconds) * 1000)
+        ok, frame = capture.read()
+        if not ok:
+            raise ValueError("Could not read a frame at this timestamp")
+    finally:
+        capture.release()
+
+    detections = HaarCascadeDetector().detect(frame)
+    counts = {"face": 0, "license_plate": 0}
+    for detection in detections:
+        counts[detection.label] += 1
+        x1, y1 = detection.x, detection.y
+        x2, y2 = x1 + detection.width, y1 + detection.height
+        cv2.rectangle(frame, (x1, y1), (x2, y2), (0, 220, 80), 2)
+        cv2.putText(
+            frame,
+            detection.label,
+            (x1, max(18, y1 - 6)),
+            cv2.FONT_HERSHEY_SIMPLEX,
+            0.55,
+            (0, 220, 80),
+            2,
+        )
+    return frame, counts
+
+
 def blur_regions(
     frame: np.ndarray,
     detections: list[Detection],
