@@ -24,7 +24,7 @@ The local Streamlit app writes the uploaded clip to a temporary local directory,
 
 ## Run on Windows
 
-Double-click `start-app.bat`. On the first run it creates a local `.venv`, installs the project dependencies, and opens the app in your browser. Select a short MP4/AVI/MOV/MKV clip and choose **Process video**. Review the result carefully: Haar cascades can miss faces or plates, and the current MP4 output is silent.
+Double-click `start-app.bat`. On the first run it creates a local `.venv`, installs the project dependencies, and opens the app in your browser. Select a short MP4/AVI/MOV/MKV clip. To inspect the detector, enter a timestamp where the target is visible and choose **Show detected regions**; green boxes show what Haar Cascade found. Then choose **Process video**. Review the result carefully: the detector can miss faces or plates, and the current MP4 output is silent. See [step 2: error analysis](docs/STEP_02_ERROR_ANALYSIS.md) for the diagnostic guide.
 
 To run manually:
 
@@ -61,4 +61,4 @@ The work covers data sourcing and annotation, transfer learning, train/validatio
 
 The detector locates a face or a plate; it does not identify a person, perform face recognition, or perform optical character recognition (OCR) on plates. Detection can fail on small, occluded, angled, dark, or motion-blurred objects. The application must show that failures are possible and should be checked before sharing a processed video.
 
-See [the project plan](docs/PROJECT_PLAN.md), [step 1: baseline](docs/STEP_01_BASELINE.md), [data sources](docs/DATA_SOURCES.md), [the glossary](docs/GLOSSARY.md), and [the experiment log](docs/EXPERIMENTS.md) for details.
+See [the project plan](docs/PROJECT_PLAN.md), [step 1: baseline](docs/STEP_01_BASELINE.md), [step 2: error analysis](docs/STEP_02_ERROR_ANALYSIS.md), [data sources](docs/DATA_SOURCES.md), [the glossary](docs/GLOSSARY.md), and [the experiment log](docs/EXPERIMENTS.md) for details.
