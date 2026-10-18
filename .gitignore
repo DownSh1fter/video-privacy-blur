@@ -1,0 +1,15 @@
+__pycache__/
+*.egg-info/
+*.py[cod]
+.venv/
+.env
+build/
+dist/
+*.mp4
+*.avi
+*.mov
+*.mkv
+data/raw/
+data/processed/
+models/*.pt
+runs/
