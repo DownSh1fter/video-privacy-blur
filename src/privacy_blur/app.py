@@ -5,9 +5,10 @@ from __future__ import annotations
 import tempfile
 from pathlib import Path
 
+import cv2
 import streamlit as st
 
-from privacy_blur.video import process_video
+from privacy_blur.video import inspect_video_frame, process_video
 
 
 st.set_page_config(page_title="Video Privacy Blur", page_icon="🔒", layout="wide")
@@ -30,6 +31,38 @@ uploaded = st.file_uploader(
 
 if uploaded is not None:
     st.video(uploaded)
+
+    st.subheader("Диагностика детектора")
+    st.write(
+        "Выберите момент, где видно лицо или номер, и посмотрите, нашёл ли их baseline. "
+        "Зелёная рамка означает, что детектор обнаружил область."
+    )
+    inspection_second = st.number_input(
+        "Секунда видео для проверки",
+        min_value=0.0,
+        value=0.0,
+        step=1.0,
+        help="Поставьте время, где объект хорошо виден. Например, 3 означает кадр примерно на третьей секунде.",
+    )
+    if st.button("Показать найденные области"):
+        try:
+            with tempfile.TemporaryDirectory(prefix="video-privacy-blur-check-") as temp_dir:
+                source_path = Path(temp_dir) / f"input{Path(uploaded.name).suffix.lower()}"
+                source_path.write_bytes(uploaded.getvalue())
+                diagnostic_frame, counts = inspect_video_frame(source_path, inspection_second)
+
+            st.image(cv2.cvtColor(diagnostic_frame, cv2.COLOR_BGR2RGB), use_container_width=True)
+            st.write(
+                f"Найдено на этом кадре: лица — {counts['face']}, "
+                f"номерные знаки — {counts['license_plate']}."
+            )
+            st.caption(
+                "Если на видимом объекте нет зелёной рамки, его пропустил детектор. "
+                "Если рамка есть, но мала, проблема в охвате области или силе размытия."
+            )
+        except Exception as error:
+            st.error(f"Не удалось проверить этот кадр: {error}")
+
     if st.button("Обработать видео", type="primary"):
         progress = st.progress(0.0, text="Подготовка…")
         try:
