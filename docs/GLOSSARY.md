@@ -1,0 +1,24 @@
+# Glossary
+
+- **Anonymization:** modifying an image so a sensitive detail (here, a face or plate) is harder to recognize.
+- **Bounding box (bbox):** rectangle around an object, usually recorded as coordinates such as `(x_min, y_min, x_max, y_max)`.
+- **Confidence score:** model score for a predicted object. It is a ranking signal, not automatically a calibrated probability.
+- **Gaussian blur:** smoothing filter that replaces fine image details with local averages; used here to obscure a detected region.
+- **Haar cascade:** traditional classifier that combines simple image features in a cascade of stages. It is fast but less robust than modern deep detectors.
+- **OCR (optical character recognition):** converting text visible in an image into characters. This project detects plate regions but does not read the plate text.
+- **Data leakage:** information from validation or test data accidentally influencing training or model selection. Adjacent video frames can cause leakage when split randomly.
+- **Detection:** predicting both an object's class and its location in an image.
+- **False negative (FN):** a labeled face or plate that the detector misses.
+- **False positive (FP):** a predicted face or plate that is not actually present.
+- **Fine-tuning:** continuing training from pretrained weights on task-specific examples.
+- **FPS (frames per second):** number of video frames processed each second.
+- **Inference:** using a trained model to make predictions on new images or video frames.
+- **IoU (Intersection over Union):** overlap between predicted and labeled bounding boxes, divided by their union area.
+- **mAP (mean Average Precision):** average precision over object classes and detection ranking. `mAP@0.5` uses IoU 0.5 to decide whether a box matches a labeled object.
+- **Precision:** `TP / (TP + FP)`. Of the predicted objects, how many were correct?
+- **Pretrained model:** model whose weights were previously learned from another dataset.
+- **Recall:** `TP / (TP + FN)`. Of the labeled objects, how many did the detector find?
+- **Transfer learning:** reusing learned representations from a pretrained model for a related task, often by replacing a detection head and fine-tuning.
+- **Train / validation / test split:** examples used to update weights / select settings / report final generalization.
+- **Threshold:** cutoff for accepting detections. Lower thresholds usually increase recall and may also increase false positives.
+- **Throughput:** amount of data processed per unit of time; for video, commonly FPS.
