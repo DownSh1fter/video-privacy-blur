@@ -10,7 +10,7 @@ A local computer-vision application that detects faces and vehicle license plate
 
 **Step 1 — runnable video baseline:** implemented with OpenCV Haar cascades and Gaussian blur. This is a traditional, lightweight baseline, not the deep detector we plan to fine-tune.
 
-**Next:** run the baseline on a short clip, record its misses, and choose a licensed dataset and modern pretrained detector for fine-tuning.
+**Next:** run the baseline on a short clip, record its misses, and choose a licensed dataset and modern pretrained detector for fine-tuning
 
 ## What we are building
 
